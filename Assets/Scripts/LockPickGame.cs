@@ -9,6 +9,9 @@ public class LockPickGame : MonoBehaviour
     [SerializeField] private RectTransform outerPanel;
     [SerializeField] private RectTransform marker;
     [SerializeField] private RectTransform cursor;
+    [SerializeField] private RectTransform pick1;
+    [SerializeField] private Image pick1Image;
+
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float spotRadius;
 
@@ -31,11 +34,16 @@ public class LockPickGame : MonoBehaviour
         Vector2 markerPos = marker.position;
 
         float distance = Vector2.Distance(cursorPos, markerPos);
-        float midDistance = cursor.sizeDelta.x * 0.25f;
+        float quarterDistance = cursor.sizeDelta.x * 0.25f;
 
-        Debug.Log(distance);
+        cursor.gameObject.GetComponent<Image>().color = new Color(distance / quarterDistance, (quarterDistance * 4 - distance) / (quarterDistance * 4), 0.0f);
 
-        cursor.gameObject.GetComponent<Image>().color = new Color(distance / midDistance, (midDistance * 4 - distance) / (midDistance * 4), 0.0f);
+        // Rotate pick in direction of cursor
+        float angle = Mathf.Atan2(cursorPos.y - pick1.position.y, cursorPos.x - pick1.position.x) * Mathf.Rad2Deg;
+        pick1.rotation = Quaternion.Euler(0.0f, 0.0f, angle);
+
+        pick1.GetComponent<Slider>().value = Vector2.Distance(cursorPos, pick1.position) / pick1.sizeDelta.x;
+        pick1Image.color = new Color(distance / quarterDistance, (quarterDistance * 4 - distance) / (quarterDistance * 4), 0.0f);
     }
 
     public void OnLockPickTurn(InputValue vector2)
