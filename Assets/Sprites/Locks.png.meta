@@ -23,6 +23,18 @@ TextureImporter:
   - first:
       213: 7522986091106690422
     second: Locks_6
+  - first:
+      213: -5477658043342499693
+    second: Locks_3
+  - first:
+      213: -3102849472873706918
+    second: Locks_4
+  - first:
+      213: -1715234491770099520
+    second: Locks_5
+  - first:
+      213: 2878595218933789387
+    second: Locks_6
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -146,6 +158,69 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
+      name: Locks_0
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 175
+        width: 171
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a9bcab3c44c6cd20800000000000000
+      internalID: 3298539608793201058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Locks_1
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 175
+        width: 171
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a9f6ffa9fbdb1450800000000000000
+      internalID: 6060679589002672550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Locks_2
+      rect:
+        serializedVersion: 2
+        x: 674
+        y: 175
+        width: 171
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ba3b9fc70da75d70800000000000000
+      internalID: 9031877826774252217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Locks_3
       rect:
         serializedVersion: 2
@@ -160,8 +235,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e2fab47c178bcf70800000000000000
-      internalID: 9208602419376354017
+      spriteID: 390528d08037bf3b0800000000000000
+      internalID: -5477658043342499693
       vertices: []
       indices: 
       edges: []
@@ -173,7 +248,7 @@ TextureImporter:
         x: 136
         y: 0
         width: 205
-        height: 261
+        height: 173
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -181,8 +256,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1c05499b3a56da450800000000000000
-      internalID: 6101644824024469697
+      spriteID: a5acad118d670f4d0800000000000000
+      internalID: -3102849472873706918
       vertices: []
       indices: 
       edges: []
@@ -194,7 +269,7 @@ TextureImporter:
         x: 396
         y: 0
         width: 206
-        height: 261
+        height: 173
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -202,8 +277,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28ee8231dd55648e0800000000000000
-      internalID: -1709584600542941566
+      spriteID: 0c8ab8341534238e0800000000000000
+      internalID: -1715234491770099520
       vertices: []
       indices: 
       edges: []
@@ -215,7 +290,7 @@ TextureImporter:
         x: 657
         y: 0
         width: 205
-        height: 261
+        height: 173
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -223,8 +298,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6756e9acdf3076860800000000000000
-      internalID: 7522986091106690422
+      spriteID: bc2bfa4a913d2f720800000000000000
+      internalID: 2878595218933789387
       vertices: []
       indices: 
       edges: []
