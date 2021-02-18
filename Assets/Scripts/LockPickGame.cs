@@ -11,6 +11,7 @@ public class LockPickGame : MonoBehaviour
     [SerializeField] private RectTransform cursor;
     [SerializeField] private RectTransform pick1;
     [SerializeField] private Image pick1Image;
+    [SerializeField] private RectTransform pick2;
 
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float spotRadius;
@@ -72,6 +73,8 @@ public class LockPickGame : MonoBehaviour
         while (isTurning)
         {
             outerPanel.Rotate(Vector3.forward, direction * rotationSpeed * Time.deltaTime);
+            pick2.rotation = outerPanel.rotation;
+
             yield return null;
         }
     }
