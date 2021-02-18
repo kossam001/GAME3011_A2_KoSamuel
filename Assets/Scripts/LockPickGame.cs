@@ -18,6 +18,7 @@ public class LockPickGame : MonoBehaviour
     [SerializeField] private float goalRotation;
     
     private bool isTurning = false;
+    private bool gameOver = false;
 
     private void Start()
     {
@@ -36,9 +37,11 @@ public class LockPickGame : MonoBehaviour
         Vector2 markerPos = marker.position;
 
         float distance = Vector2.Distance(cursorPos, markerPos);
+
+        // Using the quarter distance to shift from green to yellow to red
         float quarterDistance = cursor.sizeDelta.x * 0.25f;
 
-        cursor.gameObject.GetComponent<Image>().color = new Color(distance / quarterDistance, (quarterDistance * 4 - distance) / (quarterDistance * 4), 0.0f);
+        // cursor.gameObject.GetComponent<Image>().color = new Color(distance / quarterDistance, (quarterDistance * 4 - distance) / (quarterDistance * 4), 0.0f);
 
         // Rotate pick in direction of cursor
         float angle = Mathf.Atan2(cursorPos.y - pick1.position.y, cursorPos.x - pick1.position.x) * Mathf.Rad2Deg;
@@ -50,6 +53,8 @@ public class LockPickGame : MonoBehaviour
 
     public void OnLockPickTurn(InputValue vector2)
     {
+        if (gameOver) return;
+
         if (vector2.Get<Vector2>().x > 0.1f)
         {
             StopCoroutine(nameof(StartTurning));
@@ -92,37 +97,16 @@ public class LockPickGame : MonoBehaviour
         }
     }
 
-    //public void OnLockPickTurn(InputValue Vec)
-    //{
-    //    if (button.isPressed)
-    //    {
-    //        InvokeRepeating(nameof(StartTurningCW), 0, 0.1f);
-    //    }
-    //    else
-    //    {
-    //        CancelInvoke(nameof(StartTurning));
-    //    }
-    //}
+    private void BreakLockPick()
+    {
 
-    //public void OnLockPickTurnCCW(InputValue button)
-    //{
-    //    if (button.isPressed)
-    //    {
-    //        InvokeRepeating(nameof(StartTurningCW), 0, 0.1f);
-    //    }
-    //    else
-    //    {
-    //        CancelInvoke(nameof(StartTurning));
-    //    }
-    //}
+    }
 
-    //private void StartTurningCW()
-    //{
-    //    outerPanel.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
-    //}
-
-    //private void StartTurningCCW()
-    //{
-    //    outerPanel.Rotate(Vector3.forward, -rotationSpeed * Time.deltaTime);
-    //}
+    private void Unlock()
+    {
+        if (Mathf.Abs(outerPanel.rotation.z - goalRotation) <= 0.01f)
+        {
+            StopAllCoroutines();
+        }
+    }
 }
