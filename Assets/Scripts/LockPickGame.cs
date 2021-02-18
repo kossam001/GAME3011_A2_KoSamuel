@@ -15,7 +15,8 @@ public class LockPickGame : MonoBehaviour
 
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float spotRadius;
-
+    [SerializeField] private float goalRotation;
+    
     private bool isTurning = false;
 
     private void Start()
@@ -63,8 +64,9 @@ public class LockPickGame : MonoBehaviour
         }
         else
         {
-            StopCoroutine(nameof(StartTurning));
             isTurning = false;
+            StartCoroutine(ReturnRotation());
+            StopCoroutine(nameof(StartTurning));
         }
     }
 
@@ -73,6 +75,17 @@ public class LockPickGame : MonoBehaviour
         while (isTurning)
         {
             outerPanel.Rotate(Vector3.forward, direction * rotationSpeed * Time.deltaTime);
+            pick2.rotation = outerPanel.rotation;
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator ReturnRotation()
+    {
+        while (!isTurning && Mathf.Abs(pick2.rotation.z) >= 0.0f)
+        {
+            outerPanel.rotation = Quaternion.RotateTowards(outerPanel.rotation, Quaternion.Euler(0.0f, 0.0f, 0.0f), rotationSpeed * Time.deltaTime);
             pick2.rotation = outerPanel.rotation;
 
             yield return null;
