@@ -8,6 +8,7 @@ public class LockPickGame : MonoBehaviour
 {
     [SerializeField] private RectTransform outerPanel;
     [SerializeField] private RectTransform marker;
+    [SerializeField] private RectTransform cursor;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float spotRadius;
 
@@ -20,6 +21,21 @@ public class LockPickGame : MonoBehaviour
                 Random.Range(-outerPanel.sizeDelta.x * 0.5f, outerPanel.sizeDelta.x * 0.5f)                
             );
 
+    }
+
+    public void OnCursorMove(InputValue position)
+    {
+        Vector2 cursorPos = position.Get<Vector2>();
+        cursor.transform.position = cursorPos;
+
+        Vector2 markerPos = marker.position;
+
+        float distance = Vector2.Distance(cursorPos, markerPos);
+        float midDistance = cursor.sizeDelta.x * 0.25f;
+
+        Debug.Log(distance);
+
+        cursor.gameObject.GetComponent<Image>().color = new Color(distance / midDistance, (midDistance * 4 - distance) / (midDistance * 4), 0.0f);
     }
 
     public void OnLockPickTurn(InputValue vector2)
