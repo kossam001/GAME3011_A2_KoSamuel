@@ -7,9 +7,20 @@ using UnityEngine.UI;
 public class LockPickGame : MonoBehaviour
 {
     [SerializeField] private RectTransform outerPanel;
+    [SerializeField] private RectTransform marker;
     [SerializeField] private float rotationSpeed;
+    [SerializeField] private float spotRadius;
 
     private bool isTurning = false;
+
+    private void Start()
+    {
+        marker.localPosition = new Vector2(
+                Random.Range(-outerPanel.sizeDelta.x * 0.5f, outerPanel.sizeDelta.x * 0.5f),
+                Random.Range(-outerPanel.sizeDelta.x * 0.5f, outerPanel.sizeDelta.x * 0.5f)                
+            );
+
+    }
 
     public void OnLockPickTurn(InputValue vector2)
     {
