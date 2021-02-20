@@ -26,6 +26,8 @@ public class LockPickGame : MonoBehaviour
     [SerializeField] private GameObject resultScreen;
     [SerializeField] private TMP_Text resultText;
 
+
+
     private bool isTurning = false;
     private bool gameOver = false;
     private int lives = 3;
