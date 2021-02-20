@@ -1623,6 +1623,7 @@ MonoBehaviour:
   rotationSpeed: 10
   spotRadius: 0
   goalRotation: 45
+  livesText: {fileID: 1829786054}
   resultScreen: {fileID: 641900968}
   resultText: {fileID: 1410644107}
 --- !u!114 &1822837470
