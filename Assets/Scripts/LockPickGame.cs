@@ -6,6 +6,14 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
+public enum Difficulty
+{
+    EASY,
+    MEDIUM,
+    HARD
+}
+
 public class LockPickGame : MonoBehaviour
 {
     [Header("Minigame Components")]
@@ -20,13 +28,18 @@ public class LockPickGame : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float spotRadius;
     [SerializeField] private float goalRotation;
+    [SerializeField] private Difficulty difficulty = Difficulty.EASY;
 
     [Header("Minigame UI")]
     [SerializeField] private TMP_Text livesText;
     [SerializeField] private GameObject resultScreen;
     [SerializeField] private TMP_Text resultText;
 
-
+    [Header("Lock Images")]
+    [SerializeField] private Image lockImage;
+    [SerializeField] private Sprite easyLockSprite;
+    [SerializeField] private Sprite mediumLockSprite;
+    [SerializeField] private Sprite hardLockSprite; 
 
     private bool isTurning = false;
     private bool gameOver = false;
@@ -42,9 +55,9 @@ public class LockPickGame : MonoBehaviour
 
     }
 
-    // Need update to check for when player does not move
     private void Update()
     {
+        // Need update to check for when player does not move
         DistanceCheck();
     }
 
@@ -165,5 +178,23 @@ public class LockPickGame : MonoBehaviour
         if (!gameOver) return;
 
         SceneManager.UnloadSceneAsync("LockpickScene");
+    }
+
+    public void SetDifficulty(int difficultySelection)
+    {
+        difficulty = (Difficulty) difficultySelection;
+
+        switch (difficulty)
+        {
+            case Difficulty.EASY:
+                lockImage.sprite = easyLockSprite;
+                break;
+            case Difficulty.MEDIUM:
+                lockImage.sprite = mediumLockSprite;
+                break;
+            case Difficulty.HARD:
+                lockImage.sprite = hardLockSprite;
+                break;
+        }
     }
 }
