@@ -3,28 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
 
 public class LockPickGame : MonoBehaviour
 {
-    [SerializeField] private RectTransform outerPanel;
+    [Header("Minigame UI Components")]
+    [SerializeField] private RectTransform pivot;
     [SerializeField] private RectTransform marker;
     [SerializeField] private RectTransform cursor;
     [SerializeField] private RectTransform pick1;
-    [SerializeField] private Image pick1Image;
     [SerializeField] private RectTransform pick2;
+    [SerializeField] private Image pick1Image;
 
+    [Header("Minigame Parameters")]
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float spotRadius;
     [SerializeField] private float goalRotation;
-    
+
+    [Header("Minigame Result Screen")]
+    [SerializeField] private GameObject resultScreen;
+    [SerializeField] private TMP_Text resultText;
+
     private bool isTurning = false;
     private bool gameOver = false;
 
     private void Start()
     {
         marker.localPosition = new Vector2(
-                Random.Range(-outerPanel.sizeDelta.x * 0.5f, outerPanel.sizeDelta.x * 0.5f),
-                Random.Range(-outerPanel.sizeDelta.x * 0.5f, outerPanel.sizeDelta.x * 0.5f)                
+                Random.Range(-pivot.sizeDelta.x * 0.5f, pivot.sizeDelta.x * 0.5f),
+                Random.Range(-pivot.sizeDelta.x * 0.5f, pivot.sizeDelta.x * 0.5f)                
             );
 
     }
@@ -79,8 +86,10 @@ public class LockPickGame : MonoBehaviour
     {
         while (isTurning)
         {
-            outerPanel.Rotate(Vector3.forward, direction * rotationSpeed * Time.deltaTime);
-            pick2.rotation = outerPanel.rotation;
+            pivot.Rotate(Vector3.forward, direction * rotationSpeed * Time.deltaTime);
+            pick2.rotation = pivot.rotation;
+
+            Unlock();
 
             yield return null;
         }
@@ -90,8 +99,8 @@ public class LockPickGame : MonoBehaviour
     {
         while (!isTurning && Mathf.Abs(pick2.rotation.z) >= 0.0f)
         {
-            outerPanel.rotation = Quaternion.RotateTowards(outerPanel.rotation, Quaternion.Euler(0.0f, 0.0f, 0.0f), rotationSpeed * Time.deltaTime);
-            pick2.rotation = outerPanel.rotation;
+            pivot.rotation = Quaternion.RotateTowards(pivot.rotation, Quaternion.Euler(0.0f, 0.0f, 0.0f), rotationSpeed * Time.deltaTime);
+            pick2.rotation = pivot.rotation;
 
             yield return null;
         }
@@ -99,14 +108,18 @@ public class LockPickGame : MonoBehaviour
 
     private void BreakLockPick()
     {
-
+        if (gameOver) return;
     }
 
     private void Unlock()
     {
-        if (Mathf.Abs(outerPanel.rotation.z - goalRotation) <= 0.01f)
+        if (Mathf.Abs(pivot.rotation.eulerAngles.z - goalRotation) <= 0.1f)
         {
+            gameOver = true;
             StopAllCoroutines();
+
+            resultScreen.SetActive(true);
+            resultText.text = "SUCCESS";
         }
     }
 }
