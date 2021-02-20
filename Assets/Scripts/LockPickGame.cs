@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LockPickGame : MonoBehaviour
 {
@@ -121,5 +122,12 @@ public class LockPickGame : MonoBehaviour
             resultScreen.SetActive(true);
             resultText.text = "SUCCESS";
         }
+    }
+
+    public void OnUse()
+    {
+        if (!gameOver) return;
+
+        SceneManager.UnloadSceneAsync("LockpickScene");
     }
 }
