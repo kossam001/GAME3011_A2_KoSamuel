@@ -14,6 +14,14 @@ public enum Difficulty
     HARD
 }
 
+[System.Serializable]
+public enum SkillLevel
+{
+    BEGINNER,
+    AVERAGE,
+    SKILLED
+}
+
 public class LockPickGame : MonoBehaviour
 {
     [Header("Minigame Components")]
@@ -29,6 +37,7 @@ public class LockPickGame : MonoBehaviour
     [SerializeField] private float spotRadius;
     [SerializeField] private float goalRotation;
     [SerializeField] private Difficulty difficulty = Difficulty.EASY;
+    [SerializeField] private SkillLevel skill = SkillLevel.BEGINNER;
 
     [Header("Minigame UI")]
     [SerializeField] private TMP_Text livesText;
@@ -37,9 +46,16 @@ public class LockPickGame : MonoBehaviour
 
     [Header("Lock Images")]
     [SerializeField] private Image lockImage;
+    [SerializeField] private Image shackleImage;
+
     [SerializeField] private Sprite easyLockSprite;
+    [SerializeField] private Sprite easyShackleSprite;
+
     [SerializeField] private Sprite mediumLockSprite;
+    [SerializeField] private Sprite mediumShackleSprite;
+
     [SerializeField] private Sprite hardLockSprite; 
+    [SerializeField] private Sprite hardShackleSprite; 
 
     private bool isTurning = false;
     private bool gameOver = false;
@@ -53,6 +69,8 @@ public class LockPickGame : MonoBehaviour
                 Random.Range(-pivot.sizeDelta.x * 0.5f, pivot.sizeDelta.x * 0.5f)                
             );
 
+        SetDifficulty((int)difficulty);
+        SetSkill((int)skill);
     }
 
     private void Update()
@@ -74,7 +92,7 @@ public class LockPickGame : MonoBehaviour
         float distance = Vector2.Distance(cursorPos, markerPos);
 
         // Using the quarter distance to shift from green to yellow to red
-        float quarterDistance = cursor.sizeDelta.x * 0.25f;
+        float quarterDistance = cursor.sizeDelta.x * cursor.localScale.x * 0.25f;
 
         // Rotate pick in direction of cursor
         float angle = Mathf.Atan2(cursorPos.y - pick1.position.y, cursorPos.x - pick1.position.x) * Mathf.Rad2Deg;
@@ -141,7 +159,7 @@ public class LockPickGame : MonoBehaviour
         Vector2 markerPos = marker.position;
         float distance = Vector2.Distance(cursorPos, markerPos);
 
-        if (distance >= cursor.sizeDelta.x * 0.5f + marker.sizeDelta.x * 0.5f)
+        if (distance >= cursor.sizeDelta.x * cursor.localScale.x * 0.5f + marker.sizeDelta.x * marker.localScale.x * 0.5f)
         {
             StopAllCoroutines();
             pick2.rotation = pivot.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
@@ -160,6 +178,7 @@ public class LockPickGame : MonoBehaviour
     {
         if (Mathf.Abs(pivot.rotation.eulerAngles.z - goalRotation) <= 0.1f)
         {
+            shackleImage.rectTransform.Rotate(0.0f, 0.0f, -45.0f);
             GameOver("SUCCESS");
         }
     }
@@ -187,13 +206,37 @@ public class LockPickGame : MonoBehaviour
         switch (difficulty)
         {
             case Difficulty.EASY:
+                marker.localScale = new Vector2(1.0f, 1.0f);
+                shackleImage.sprite = easyShackleSprite;
                 lockImage.sprite = easyLockSprite;
                 break;
             case Difficulty.MEDIUM:
+                marker.localScale = new Vector2(0.5f, 0.5f);
+                shackleImage.sprite = mediumShackleSprite;
                 lockImage.sprite = mediumLockSprite;
                 break;
             case Difficulty.HARD:
+                marker.localScale = new Vector2(0.1f, 0.1f);
+                shackleImage.sprite = hardShackleSprite;
                 lockImage.sprite = hardLockSprite;
+                break;
+        }
+    }
+
+    public void SetSkill(int skillSelection)
+    {
+        skill = (SkillLevel)skillSelection;
+
+        switch (skill)
+        {
+            case SkillLevel.BEGINNER:
+                cursor.localScale = new Vector2(0.5f, 0.5f);
+                break;
+            case SkillLevel.AVERAGE:
+                cursor.localScale = new Vector2(1.0f, 1.0f);
+                break;
+            case SkillLevel.SKILLED:
+                cursor.localScale = new Vector2(1.5f, 1.5f);
                 break;
         }
     }

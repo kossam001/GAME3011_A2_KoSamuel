@@ -763,7 +763,19 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1822837469}
+        m_TargetAssemblyTypeName: LockPickGame, Assembly-CSharp
+        m_MethodName: SetSkill
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &375994247
 MonoBehaviour:
@@ -3798,13 +3810,18 @@ MonoBehaviour:
   spotRadius: 0
   goalRotation: 45
   difficulty: 0
+  skill: 0
   livesText: {fileID: 1829786054}
   resultScreen: {fileID: 641900968}
   resultText: {fileID: 1410644107}
   lockImage: {fileID: 541948386}
+  shackleImage: {fileID: 1963439981}
   easyLockSprite: {fileID: 6101644824024469697, guid: 9fd29c21f825ab54c8de33b84325a6ab, type: 3}
+  easyShackleSprite: {fileID: 3298539608793201058, guid: 9fd29c21f825ab54c8de33b84325a6ab, type: 3}
   mediumLockSprite: {fileID: -1709584600542941566, guid: 9fd29c21f825ab54c8de33b84325a6ab, type: 3}
+  mediumShackleSprite: {fileID: 6060679589002672550, guid: 9fd29c21f825ab54c8de33b84325a6ab, type: 3}
   hardLockSprite: {fileID: 7522986091106690422, guid: 9fd29c21f825ab54c8de33b84325a6ab, type: 3}
+  hardShackleSprite: {fileID: 9031877826774252217, guid: 9fd29c21f825ab54c8de33b84325a6ab, type: 3}
 --- !u!114 &1822837470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4078,11 +4095,11 @@ RectTransform:
   m_Father: {fileID: 541948385}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 85.5, y: 88.49994}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -72.14657, y: 2.0583344}
   m_SizeDelta: {x: 171, y: 86}
-  m_Pivot: {x: 1, y: 0}
+  m_Pivot: {x: 0.7, y: 0}
 --- !u!114 &1963439981
 MonoBehaviour:
   m_ObjectHideFlags: 0
