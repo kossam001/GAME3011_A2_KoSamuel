@@ -40,6 +40,7 @@ public class LockPickGame : MonoBehaviour
     [SerializeField] private SkillLevel skill = SkillLevel.BEGINNER;
 
     [Header("Minigame UI")]
+    [SerializeField] private TMP_Text timerText;
     [SerializeField] private TMP_Text livesText;
     [SerializeField] private GameObject resultScreen;
     [SerializeField] private TMP_Text resultText;
@@ -60,10 +61,14 @@ public class LockPickGame : MonoBehaviour
     private bool isTurning = false;
     private bool gameOver = false;
     private int lives = 3;
+    private float countdown = 60;
     private Vector2 cursorPos;
 
     private void Start()
     {
+        // Initialize lock parameters
+        goalRotation = Random.Range(30.0f, 330.0f);
+
         marker.localPosition = new Vector2(
                 Random.Range(-pivot.sizeDelta.x * 0.5f, pivot.sizeDelta.x * 0.5f),
                 Random.Range(-pivot.sizeDelta.x * 0.5f, pivot.sizeDelta.x * 0.5f)                
@@ -71,6 +76,21 @@ public class LockPickGame : MonoBehaviour
 
         SetDifficulty((int)difficulty);
         SetSkill((int)skill);
+
+        StartCoroutine(Countdown());
+    }
+
+    private IEnumerator Countdown()
+    {
+        while (countdown > 0)
+        {
+            countdown -= Time.deltaTime;
+            timerText.text = ((int)countdown).ToString();
+
+            yield return null;
+        }
+
+        GameOver("FAIL");
     }
 
     private void Update()
@@ -106,13 +126,13 @@ public class LockPickGame : MonoBehaviour
     {
         if (gameOver) return;
 
-        if (vector2.Get<Vector2>().x > 0.1f)
+        if (vector2.Get<Vector2>().x > 0.1f && !isTurning)
         {
             StopCoroutine(nameof(StartTurning));
             isTurning = true;
             StartCoroutine(StartTurning(1));
         }
-        else if (vector2.Get<Vector2>().x < -0.1f)
+        else if (vector2.Get<Vector2>().x < -0.1f && !isTurning)
         {
             StopCoroutine(nameof(StartTurning));
             isTurning = true;
@@ -132,7 +152,7 @@ public class LockPickGame : MonoBehaviour
         {
             pivot.Rotate(Vector3.forward, direction * rotationSpeed * Time.deltaTime);
             pick2.rotation = pivot.rotation;
-
+            
             BreakLockPick();
             Unlock();
 
@@ -147,6 +167,7 @@ public class LockPickGame : MonoBehaviour
             pick2.rotation = pivot.rotation = Quaternion.RotateTowards(pivot.rotation, Quaternion.Euler(0.0f, 0.0f, 0.0f), rotationSpeed * Time.deltaTime);
 
             BreakLockPick();
+            Unlock();
 
             yield return null;
         }
@@ -162,6 +183,8 @@ public class LockPickGame : MonoBehaviour
         if (distance >= cursor.sizeDelta.x * cursor.localScale.x * 0.5f + marker.sizeDelta.x * marker.localScale.x * 0.5f)
         {
             StopAllCoroutines();
+            StartCoroutine(Countdown());
+
             pick2.rotation = pivot.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
             lives -= 1;
